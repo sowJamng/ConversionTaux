@@ -1,0 +1,38 @@
+<project name="monEssai" default="assemble-app" basedir=".">
+
+	<property name="app.dir" value="${basedir}" />
+	<property name="app.name" value="conversionTauxServeur" />
+	<property name="src.dir" value="${app.dir}/src" />
+	<property name="build.dir" value="${app.dir}/build" />
+	<property name="conf.dir" value="${app.dir}/conf" />
+	<property name="package.dir" value="conversionTaux" />
+	<property name="package.name" value="conversionTaux" />
+
+	<target name="prepare">
+		<mkdir dir="${build.dir}" />
+	</target>
+
+	<target name="compile" depends="prepare">
+		<javac destdir="${build.dir}" debug="on">
+			<src path="${src.dir}" />
+			<classpath>
+				<pathelement location="${build.dir}" />
+				<pathelement location="${appserver.dir}/lib/appserv-rt.jar" />
+				<pathelement location="${appserver.dir}/lib/javaee.jar" />
+			</classpath>
+		</javac>
+	</target>
+
+	<!-- Package the session classes -->
+	<target name="jar" depends="compile">
+		<jar jarfile="${build.dir}/${app.name}.jar">
+			<fileset dir="${build.dir}">
+				<include name="${package.dir}/session/**" />
+				<include name="${package.dir}/entity/**" />
+			</fileset>
+ 			 <metainf dir="${conf.dir}">
+				<include name="persistence.xml" />
+			</metainf>
+		</jar>
+	</target>
+</project>

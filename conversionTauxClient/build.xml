@@ -1,0 +1,22 @@
+<project name="monEssai" default="assemble-app" basedir=".">
+
+	<property name="app.dir" value="${basedir}" />
+	<property name="src.dir" value="${app.dir}/src" />
+	<property name="build.dir" value="${app.dir}/build" />
+
+	<target name="prepare">
+		<mkdir dir="${build.dir}" />
+	</target>
+
+	<target name="compile" depends="prepare">
+		<javac destdir="${build.dir}" debug="on">
+			<src path="${src.dir}" />
+			<classpath>
+				<pathelement location="${build.dir}" />
+				<pathelement location="${appserver.dir}/lib/appserv-rt.jar" />
+				<pathelement location="${appserver.dir}/lib/javaee.jar" />
+			</classpath>
+		</javac>
+	</target>
+
+</project>
